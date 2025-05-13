@@ -1,0 +1,29 @@
+/*BASE*/
+/*style.css */
+
+body {
+    font-family: Courier New;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+main {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 20px;
+}

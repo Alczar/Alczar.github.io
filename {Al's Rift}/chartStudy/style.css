@@ -1,0 +1,245 @@
+/*CHART STUDY*/
+/*style.css */
+
+body {
+    font-family: Courier New;
+    margin: 0;
+    padding: 20px;
+}
+
+header {
+    text-align: center;
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+}
+
+main {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+footer {
+    text-align: center;
+    font-size: 0.8em;
+    margin-top: 20px;
+}
+
+
+/**********************************/
+
+.player__radar {
+   --size: 460px;   
+   padding: 2rem;
+   max-width: var(--size);
+   height: min(100vw, var(--size));
+   margin: 2rem auto 0 auto;
+   position: relative;
+   filter: drop-shadow(1px 1px 2px #c2c7d4);
+}
+
+.player__radar::after {
+   
+   /* the --overall value is shown only if the .player
+    * element has an ID applied (so a player has
+    * been chosen). Note that the content property can't
+    * print an integer value, so I used the counter()
+    * function as a workaround
+    */
+   content: '';
+   position: absolute;
+   z-index: 2;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   opacity: 0;
+   z-index: 1;
+   font-weight: 400;
+   font-size: 1.8em;
+   color: #fff;
+   text-shadow: 1px 1px 4px #6C90AC;
+   transition: opacity .5s 0s;
+}
+
+.player[id] .player__radar::after {
+   counter-reset: value var(--ove);
+   content: counter(value);
+   opacity: 1;
+}
+
+.player__ratings {
+   height: 100%;
+   width: 100%;
+   position: relative;
+   display: flex;
+   
+   --bg: transparent calc(50% - 1px), 
+         #fff 50%, transparent calc(50% + 1px);
+}
+
+.player__ratings::before,
+.player__ratings::after {
+   width: inherit;
+   height: inherit;
+   content: '';
+}
+
+.player__ratings::after {
+   z-index: 1;
+   position: absolute;
+   background: rgba(130, 160, 180, .3);
+   transition: clip-path .33s ease-in-out;
+}
+
+.player__radar--6 .player__ratings::before {
+   /* This creates the hexagonal shape 
+    * Note that all the coordinates have been
+    * set in relative units, so the widget is 
+    * responsive (try to slightly change the value 
+    * of the variable --size on line 32)
+    */
+   clip-path: polygon(70% 15%, 90% 50%, 70% 85%, 
+                      30% 85%, 10% 50%, 30% 15%);
+   
+   
+   /* the 3 white lines and a light gray gradient 
+    * over the shape 
+    */
+   background:
+      linear-gradient(60deg,  var(--bg)),
+      linear-gradient(120deg, var(--bg)),
+      linear-gradient(180deg, var(--bg)),
+      linear-gradient(135deg, #f2f2f8, #c5c4c9);
+   
+}
+
+.player__radar--6 .player__ratings::after {
+   /* At the initial state the polygon is collapsed 
+    * in the center of the radar
+    */
+   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 
+                      50% 50%, 50% 50%, 50% 50%);
+}
+
+
+
+.player[id] .player__radar--6 .player__ratings::after {
+   
+   /* when an ID has been set on the .player container
+    * the polygon changes their coordinates
+    */
+   
+   clip-path: polygon(
+     /* point 1 */
+     calc(50% + calc(20% * var(--pac) / 100)) 
+     calc(50% - calc(35% * var(--pac) / 100)), 
+     
+      /* point 2 */
+     calc(50% + calc(40% * var(--sho) / 100))
+     50%,
+
+     /* point 3 */
+     calc(50% + calc(20% * var(--pas) / 100)) 
+     calc(50% + calc(35% * var(--pas) / 100)),
+     
+     /* point 4 */
+     calc(50% - calc(20% * var(--dri) / 100)) 
+     calc(50% + calc(35% * var(--dri) / 100)),
+     
+     /* point 5 */
+     calc(50% - calc(40% * var(--def) / 100))
+     50%,
+     
+     /* point 6 */
+     calc(50% - calc(20% * var(--phy) / 100)) 
+     calc(50% - calc(35% * var(--phy) / 100)));
+}
+
+
+
+
+.player__ratings dt {
+   position: absolute;
+   z-index: 2;
+   text-align: center;
+   line-height: 1;
+   font-weight: 400;
+   font-size: clamp(1rem, calc(3.5vw + .5rem), 1.75rem);
+}
+
+.player__ratings dt::after { 
+   content: ''; 
+   display: block; 
+   font-weight: 300; 
+   font-size: .88em;
+   opacity: 0;
+   transition: opacity .5s 0s;   
+}
+
+.player[id] .player__ratings dt::after { 
+   content: counter(value, decimal-leading-zero); 
+   opacity: 1;
+}
+
+
+/* positioning all the properties 'pac', 'sho', ...    
+ * around the radar 
+ */
+
+.player__radar--6 dt:nth-of-type(1) { 
+   top: 0; 
+   left: 64%; 
+}
+
+.player__radar--6 dt:nth-of-type(2) { 
+   top: 50%; left: 92%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--6 dt:nth-of-type(3) { 
+   top: 88%; left: 64%; 
+}
+
+.player__radar--6 dt:nth-of-type(4) { 
+   top: 88%; left: 22%; 
+}
+
+.player__radar--6 dt:nth-of-type(5) { 
+   top: 50%; right: 93%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--6 dt:nth-of-type(6) { 
+   top: 0; left: 22%; 
+}
+
+
+/* I'm printing the values of the variables 
+ * around the radar 
+ */
+
+.player__radar--6 dt:nth-of-type(1)::after { 
+   counter-reset: value var(--pac); 
+}
+.player__radar--6 dt:nth-of-type(2)::after { 
+   counter-reset: value var(--sho); }
+
+.player__radar--6 dt:nth-of-type(3)::after {  
+   counter-reset: value var(--pas); }
+
+.player__radar--6 dt:nth-of-type(4)::after { 
+   counter-reset: value var(--dri); }
+
+.player__radar--6 dt:nth-of-type(5)::after { 
+   counter-reset: value var(--def); }
+
+.player__radar--6 dt:nth-of-type(6)::after { 
+   counter-reset: value var(--phy); }
+
+.player__ratings dd  {
+   position: absolute;
+   clip: rect(0,0,0,0);
+}

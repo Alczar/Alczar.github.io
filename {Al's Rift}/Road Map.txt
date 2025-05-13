@@ -1,0 +1,34 @@
+Mythological Encyclopedia
+
+Coding Concepts to Grasph and Develop:
+[ ]Classes
+[ ]Array Sorting
+[ ]JSON Integration
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+[ ]
+
+
+
+Ideas:
+1. Data to gather for the Paideia:
+    a.
+    b.
+    c.
+    d.
+    e.

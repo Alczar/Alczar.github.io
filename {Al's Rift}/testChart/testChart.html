@@ -1,0 +1,227 @@
+<!--TEST CHART-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Al's Rift - Lore Ipsum</title>
+</head>
+
+
+<body>
+    <header>
+        <h1>Al's Rift</h1>
+    </header>
+
+<main class="player">
+   
+   <h1 class="player__title">CSS Radar Chart</h1>
+      
+   <p class="player__par">
+      Pick a player below the radar.<br />
+      Made with love by Fabrizio Calderan <br />
+      (<a href="https://twitter.com/fcalderan" target="_blank">@fcalderan</a>)
+   </p>
+      
+   
+   <section class="player__radar player__radar--6">    
+      <dl class="player__ratings">
+         <dt>PAC</dt> <dd id="player__pac">0</dd>
+         <dt>SHO</dt> <dd id="player__sho">0</dd>
+         <dt>PAS</dt> <dd id="player__pas">0</dd>
+         <dt>DRI</dt> <dd id="player__dri">0</dd>
+         <dt>DEF</dt> <dd id="player__def">0</dd>
+         <dt>PHY</dt> <dd id="player__phy">0</dd>
+      </dl>
+   </section>
+   
+   
+   
+   <form class="players">
+      
+      <p class="player__legend">Select a player</p>
+
+      <ul class="players__list">
+         <li>
+            <input type="radio" name="currentplayer" 
+                   value="Matteo Gabbia" id="p_matteogabbia"/>
+            <label for="p_matteogabbia">
+              <img src="https://www.futwiz.com/assets/img/fifa20/faces/240277.png" />
+            </label>   
+         </li>
+         <li>
+            <input type="radio" name="currentplayer" 
+                   value="Remo Freuler" id="p_remofreuler"/>
+            <label for="p_remofreuler">
+               <img src="https://www.futwiz.com/assets/img/fifa21/faces/202024.png" />
+            </label>   
+         </li>
+         <li>
+            <input type="radio" name="currentplayer" 
+                   value="Kevin De Bruyne" id="p_kevindebruyne"/>
+            <label for="p_kevindebruyne">
+               <img src="https://www.futwiz.com/assets/img/fifa21/faces/192985.png" /> 
+            </label>   
+         </li>
+      </ul>
+   </form>
+   
+   <section>
+      <h2>How it works</h2>
+
+      <p class="player__par">
+         When one of the players is selected, one of the following IDs, 
+         which contains some defined variables, is added to the main container
+      </p>
+      
+      
+<style class="code">
+#sp_matteogabbia { 
+   --name:'Matteo Gabbia (MIL.)';
+   --pac:56;
+   --sho:33;
+   --pas:36;
+   --dri:48;
+   --def:67;
+   --phy:56; 
+   --ove:62;
+}
+         
+#sp_remofreuler { 
+   --name:'Remo Freuler (ATA.)';
+   --pac:67;
+   --sho:69;
+   --pas:80;
+   --dri:76;
+   --def:72;
+   --phy:68;       
+   --ove:78;
+}   
+         
+#sp_kevindebruyne { 
+   --name:'Kevin De Bruyne (MAN.)';
+   --pac:60;
+   --sho:86;
+   --pas:94;
+   --dri:90;
+   --def:65;
+   --phy:80;       
+   --ove:92;
+}
+</style>
+      
+      <p class="player__par">
+        Most of these variables are used to set the coordinates of 
+         the polygon appearing over the hexagonal shape. The 
+         coordinates are defined inside the value of a 
+         clip-path property and computed by some calc() 
+         expressions.
+      </p>
+
+   
+   
+<code class="code">
+.player[id] .player__ratings::after {
+      
+   clip-path: polygon(
+      
+      /* point 1 */
+      calc(50% + calc(20% * var(--pac) / 100)) 
+      calc(50% - calc(35% * var(--pac) / 100)), 
+     
+      /* point 2 */
+      calc(50% + calc(40% * var(--sho) / 100))
+      50%,
+
+      /* point 3 */
+      calc(50% + calc(20% * var(--pas) / 100)) 
+      calc(50% + calc(35% * var(--pas) / 100)),
+     
+      /* point 4 */
+      calc(50% - calc(20% * var(--dri) / 100)) 
+      calc(50% + calc(35% * var(--dri) / 100)),
+     
+      /* point 5 */
+      calc(50% - calc(40% * var(--def) / 100))
+      50%,
+     
+      /* point 6 */
+      calc(50% - calc(20% * var(--phy) / 100)) 
+      calc(50% - calc(35% * var(--phy) / 100)));
+}
+</code>
+      
+      <p class="player__par">
+         A simple transition effect over the clip-path is 
+         applied with the code below.
+      </p>
+      
+      
+<code class="code">
+transition: clip-path .33s ease-in-out;
+</code>
+      
+      
+      
+   </section>
+</main>
+
+<aside class="player" id="radar5">
+   <h2>Other shapes</h2>
+   
+   <p class="player__par">Hover a shape to see its values. Pentagon:</p>
+   
+   
+   <section class="player__radar player__radar--5" 
+      style="--pac:70;
+             --sho:86;
+             --pas:92;
+             --dri:79;
+             --def:67;
+             --ove:85">    
+      
+      <dl class="player__ratings">
+         <dt>PAC</dt> <dd id="player__pac">70</dd>
+         <dt>SHO</dt> <dd id="player__sho">86</dd>
+         <dt>PAS</dt> <dd id="player__pas">92</dd>
+         <dt>DRI</dt> <dd id="player__dri">79</dd>
+         <dt>DEF</dt> <dd id="player__def">85</dd>
+      </dl>
+   </section>
+   
+   
+   <p class="player__par">Octagon:</p>
+   
+   <section class="player__radar player__radar--8" 
+      style="--pac:77;
+             --sho:65;
+             --pas:84;
+             --dri:33;
+             --def:91;
+             --phy:61;
+             --foo:98;
+             --bar:90;
+             --ove:72">    
+      
+      <dl class="player__ratings">
+         <dt>PAC</dt> <dd id="player__pac">77</dd>
+         <dt>SHO</dt> <dd id="player__sho">65</dd>
+         <dt>PAS</dt> <dd id="player__pas">84</dd>
+         <dt>DRI</dt> <dd id="player__dri">33</dd>
+         <dt>DEF</dt> <dd id="player__def">91</dd>
+         <dt>PHY</dt> <dd id="player__phy">61</dd>
+         <dt>FOO</dt> <dd id="player__foo">98</dd>
+         <dt>BAR</dt> <dd id="player__bar">90</dd>
+      </dl>
+   </section>
+</aside>
+
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+<script src="script.js"></script>
+</body>
+
+</html>

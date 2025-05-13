@@ -1,0 +1,638 @@
+/*TEST CHART*/
+/*style.css */
+
+*, *:before, *::after { margin: 0; padding: 0;  box-sizing: border-box; }
+
+
+/* 
+ * I placed some comments below in case you are
+ * interested in the code.
+ */
+
+main, aside {
+   font-family: Montserrat;
+   font-size: clamp(1rem, calc(3.5vw + .5rem), 1.75rem);
+   line-height: 1.6;
+   color: #7095ad;
+   text-align: center;
+}
+
+.player a {
+   color: inherit;
+   text-decoration: underline;
+}
+
+.player__par {
+   color: #aac14f;
+   font-size: .7em;
+}
+
+.player h1, .player h2 {
+   padding: 1rem 0;
+}
+
+.player__radar {
+   --size: 460px;   
+   padding: 2rem;
+   max-width: var(--size);
+   height: min(100vw, var(--size));
+   margin: 2rem auto 0 auto;
+   position: relative;
+   filter: drop-shadow(1px 1px 2px #c2c7d4);
+}
+
+.player__radar::after {
+   
+   /* the --overall value is shown only if the .player
+    * element has an ID applied (so a player has
+    * been chosen). Note that the content property can't
+    * print an integer value, so I used the counter()
+    * function as a workaround
+    */
+   content: '';
+   position: absolute;
+   z-index: 2;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   opacity: 0;
+   z-index: 1;
+   font-weight: 400;
+   font-size: 1.8em;
+   color: #fff;
+   text-shadow: 1px 1px 4px #6C90AC;
+   transition: opacity .5s 0s;
+}
+
+.player[id] .player__radar::after {
+   counter-reset: value var(--ove);
+   content: counter(value);
+   opacity: 1;
+}
+
+.player__ratings {
+   height: 100%;
+   width: 100%;
+   position: relative;
+   display: flex;
+   
+   --bg: transparent calc(50% - 1px), 
+         #fff 50%, transparent calc(50% + 1px);
+}
+
+.player__ratings::before,
+.player__ratings::after {
+   width: inherit;
+   height: inherit;
+   content: '';
+}
+
+.player__ratings::after {
+   z-index: 1;
+   position: absolute;
+   background: rgba(130, 160, 180, .3);
+   transition: clip-path .33s ease-in-out;
+}
+
+.player__radar--6 .player__ratings::before {
+   /* This creates the hexagonal shape 
+    * Note that all the coordinates have been
+    * set in relative units, so the widget is 
+    * responsive (try to slightly change the value 
+    * of the variable --size on line 32)
+    */
+   clip-path: polygon(70% 15%, 90% 50%, 70% 85%, 
+                      30% 85%, 10% 50%, 30% 15%);
+   
+   
+   /* the 3 white lines and a light gray gradient 
+    * over the shape 
+    */
+   background:
+      linear-gradient(60deg,  var(--bg)),
+      linear-gradient(120deg, var(--bg)),
+      linear-gradient(180deg, var(--bg)),
+      linear-gradient(135deg, #f2f2f8, #c5c4c9);
+   
+}
+
+.player__radar--6 .player__ratings::after {
+   /* At the initial state the polygon is collapsed 
+    * in the center of the radar
+    */
+   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 
+                      50% 50%, 50% 50%, 50% 50%);
+}
+
+
+
+.player[id] .player__radar--6 .player__ratings::after {
+   
+   /* when an ID has been set on the .player container
+    * the polygon changes their coordinates
+    */
+   
+   clip-path: polygon(
+     /* point 1 */
+     calc(50% + calc(20% * var(--pac) / 100)) 
+     calc(50% - calc(35% * var(--pac) / 100)), 
+     
+      /* point 2 */
+     calc(50% + calc(40% * var(--sho) / 100))
+     50%,
+
+     /* point 3 */
+     calc(50% + calc(20% * var(--pas) / 100)) 
+     calc(50% + calc(35% * var(--pas) / 100)),
+     
+     /* point 4 */
+     calc(50% - calc(20% * var(--dri) / 100)) 
+     calc(50% + calc(35% * var(--dri) / 100)),
+     
+     /* point 5 */
+     calc(50% - calc(40% * var(--def) / 100))
+     50%,
+     
+     /* point 6 */
+     calc(50% - calc(20% * var(--phy) / 100)) 
+     calc(50% - calc(35% * var(--phy) / 100)));
+}
+
+
+
+
+.player__ratings dt {
+   position: absolute;
+   z-index: 2;
+   text-align: center;
+   line-height: 1;
+   font-weight: 400;
+   font-size: clamp(1rem, calc(3.5vw + .5rem), 1.75rem);
+}
+
+.player__ratings dt::after { 
+   content: ''; 
+   display: block; 
+   font-weight: 300; 
+   font-size: .88em;
+   opacity: 0;
+   transition: opacity .5s 0s;   
+}
+
+.player[id] .player__ratings dt::after { 
+   content: counter(value, decimal-leading-zero); 
+   opacity: 1;
+}
+
+
+/* positioning all the properties 'pac', 'sho', ...    
+ * around the radar 
+ */
+
+.player__radar--6 dt:nth-of-type(1) { 
+   top: 0; 
+   left: 64%; 
+}
+
+.player__radar--6 dt:nth-of-type(2) { 
+   top: 50%; left: 92%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--6 dt:nth-of-type(3) { 
+   top: 88%; left: 64%; 
+}
+
+.player__radar--6 dt:nth-of-type(4) { 
+   top: 88%; left: 22%; 
+}
+
+.player__radar--6 dt:nth-of-type(5) { 
+   top: 50%; right: 93%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--6 dt:nth-of-type(6) { 
+   top: 0; left: 22%; 
+}
+
+
+/* I'm printing the values of the variables 
+ * around the radar 
+ */
+
+.player__radar--6 dt:nth-of-type(1)::after { 
+   counter-reset: value var(--pac); 
+}
+.player__radar--6 dt:nth-of-type(2)::after { 
+   counter-reset: value var(--sho); }
+
+.player__radar--6 dt:nth-of-type(3)::after {  
+   counter-reset: value var(--pas); }
+
+.player__radar--6 dt:nth-of-type(4)::after { 
+   counter-reset: value var(--dri); }
+
+.player__radar--6 dt:nth-of-type(5)::after { 
+   counter-reset: value var(--def); }
+
+.player__radar--6 dt:nth-of-type(6)::after { 
+   counter-reset: value var(--phy); }
+
+.player__ratings dd  {
+   position: absolute;
+   clip: rect(0,0,0,0);
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/* This is the style for 'Select a player' form */
+
+.players {
+   display: flex;
+   justify-content: space-between;
+   align-items: center;
+   margin: 1rem 0;
+   padding: 0 calc(50vw - 480px);
+   border-top: 1px #e8e8ec dashed;
+   border-bottom: 1px #e8e8ec solid;
+   box-shadow: 0 4px 10px -4px #e8e8ec;
+   background: #fefeff
+}
+
+
+.player__legend {
+   flex-basis: 40%;
+   margin-right: 3rem;
+}
+
+@media (max-width: 640px) {
+   .players {
+      padding-top: 1rem;
+      flex-direction: column;         
+   }
+   
+   .player__legend {
+      text-align: center;
+      margin-right: 0;
+   }
+}
+
+.player__legend::after {
+   display: block;
+   font-weight: 300;
+   color: #aac14f;
+   line-height: 1.3;
+   content: var(--name, '–');
+}
+
+.players__list {
+   display: flex;
+   margin: 1.5rem 0;
+   justify-content: center;
+   flex-wrap: nowrap;
+   list-style: none;
+}
+
+.players__list li {
+   margin: 0 1rem;
+   max-width: 120px;
+}
+
+.players__list img {
+   display: block;
+   max-width: 100%;
+}
+
+.players__list label {
+   display: flex;
+   cursor: pointer;  
+   outline: 1px #e8e8ec solid;
+   filter: grayscale(1);
+}
+
+.players__list input {
+   position: absolute;
+   clip: rect(0,0,0,0);
+}
+
+.players__list :checked ~ label {
+   outline: 4px #aac14f solid;
+   filter: grayscale(0);
+   transition: filter .33s 0s;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/* Style for the 'How it works' section */
+
+section:not([class]),
+aside > :not(section) {
+   padding: 0 1rem !important;
+   text-align: left;
+   max-width: 960px;
+   margin: 0 auto;
+}
+
+
+
+.code {
+   font-weight: 300;
+   font-family: Inconsolata;
+   line-height: 1.3;
+   text-align: left;
+   display: block;
+   white-space: pre;
+   background:#f2f2f2;
+   color: #6e8392;
+   margin: 2rem 0;
+   padding: 0 1rem 1.5rem;
+   font-size: .7em;
+   max-height: 60vh;
+   overflow: auto;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+
+/* pentagonal shape style */
+
+
+.player__radar--5 .player__ratings::before {
+   /* This creates the pentagonal shape */
+   clip-path: polygon(50% 10%, 88% 38%, 74% 82%, 
+                      26% 82%, 12% 38%);
+   
+   
+   /* the 5 white lines and a light gray gradient 
+    * over the shape 
+    */
+   background:
+      linear-gradient(90deg,     var(--bg)),     
+      linear-gradient(18deg,     var(--bg)), 
+      linear-gradient(-53deg,    var(--bg)), 
+      linear-gradient(-126.5deg, var(--bg)), 
+      linear-gradient(162deg,    var(--bg)), 
+      linear-gradient(135deg, #f2f2f8, #c5c4c9);
+   
+   background-position: 50% 0, 0 0, 0 100%, 100% 100%, 100% 0;
+   background-size    : auto 50%, 50% 84.5%, 62.5% 50%, 
+                        63% 50%, 50% 84.5%, auto;
+   background-repeat  : no-repeat, no-repeat, no-repeat, 
+                        no-repeat, no-repeat;
+}
+
+.player__radar--5 .player__ratings::after {
+   /* At the initial state the polygon is collapsed 
+    * in the center of the radar */
+   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 
+                      50% 50%, 50% 50%);
+}
+
+
+.player__radar--5:hover::after {
+   counter-reset: value var(--ove);
+   content: counter(value);
+   opacity: 1;
+
+}
+
+.player__radar--5:hover .player__ratings::after {
+   
+   /* when an ID has been set on the .player container
+    * the polygon changes their coordinates
+    */
+   clip-path: polygon(
+     /* point 1 */
+     50% calc(50% - calc(40% * var(--pac) / 100)), 
+     
+      /* point 2 */
+     calc(50% + calc(38% * var(--sho) / 100))
+     calc(50% - calc(12% * var(--sho) / 100)),
+
+     /* point 3 */
+     calc(50% + calc(24% * var(--pas) / 100)) 
+     calc(50% + calc(32% * var(--pas) / 100)),
+     
+     /* point 4 */
+     calc(50% - calc(24% * var(--dri) / 100)) 
+     calc(50% + calc(32% * var(--dri) / 100)),
+     
+     /* point 5 */
+     calc(50% - calc(38% * var(--def) / 100))
+     calc(50% - calc(12% * var(--def) / 100))
+   )
+}
+
+
+/* positioning all the properties 'pac', 'sho', ...    
+ * around the radar 
+ */
+
+.player__radar--5:not(:hover) dt::after,
+.player__radar--5:not(:hover)::after {
+   opacity: 0 !important;
+}
+
+.player__radar--5 dt:nth-of-type(1) { 
+   top: -5%; left: 50%; 
+   transform: translateX(-50%);
+}
+
+.player__radar--5 dt:nth-of-type(2) { 
+   top: 38%; left: 92%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--5 dt:nth-of-type(3) { 
+   top: 88%; left: 74%; 
+   transform: translateX(-50%);
+}
+
+.player__radar--5 dt:nth-of-type(4) { 
+   top: 88%; left: 26%; 
+   transform: translateX(-50%);
+}
+
+.player__radar--5 dt:nth-of-type(5) { 
+   top: 38%; right: 93%; 
+   transform: translateY(-50%); 
+}
+
+
+
+/* I'm printing the values of the variables 
+ * around the radar 
+ */
+
+.player__radar--5 dt:nth-of-type(1)::after { 
+   counter-reset: value var(--pac); 
+}
+
+.player__radar--5 dt:nth-of-type(2)::after { 
+   counter-reset: value var(--sho); }
+
+.player__radar--5 dt:nth-of-type(3)::after {  
+   counter-reset: value var(--pas); }
+
+.player__radar--5 dt:nth-of-type(4)::after { 
+   counter-reset: value var(--dri); }
+
+.player__radar--5 dt:nth-of-type(5)::after { 
+   counter-reset: value var(--def); }
+
+/*--------------------------------------------------------------------------------------------------------------------------------------------------------------*/
+
+/* Octagon */
+
+.player__radar--8 .player__ratings::before {
+   /* This creates the OCtagonal shape */
+   clip-path: polygon(65% 13%, 35% 13%, 13% 35%,
+                      13% 65%, 35% 87%, 65% 87%, 
+                      87% 65%, 87% 35%);
+     
+   
+   /* the 5 white lines and a light gray gradient 
+    * over the shape 
+    */
+   background:
+      linear-gradient(112.5deg,  var(--bg)),     
+      linear-gradient(157.5deg,  var(--bg)),     
+      linear-gradient(202.5deg,  var(--bg)),     
+      linear-gradient(247.5deg,  var(--bg)),     
+      linear-gradient(135deg, #f2f2f8, #c5c4c9);   
+}
+
+.player__radar--8 .player__ratings::after {
+   /* At the initial state the polygon is collapsed 
+    * in the center of the radar */
+   clip-path: polygon(50% 50%, 50% 50%, 50% 50%, 
+                      50% 50%, 50% 50%, 50% 50%,
+                      50% 50%, 50% 50%);
+}
+
+
+.player__radar--8:hover::after {
+   counter-reset: value var(--ove);
+   content: counter(value);
+   opacity: 1;
+
+}
+
+.player__radar--8:hover .player__ratings::after {
+   
+   /* when an ID has been set on the .player container
+    * the polygon changes their coordinates
+    */
+   clip-path: polygon(
+     /* point 1 */
+     calc(50% + calc(15% * var(--pac) / 100))
+     calc(50% - calc(37% * var(--pac) / 100)), 
+     
+      /* point 2 */
+     calc(50% + calc(37% * var(--sho) / 100))
+     calc(50% - calc(15% * var(--sho) / 100)),
+
+     /* point 3 */
+     calc(50% + calc(37% * var(--pas) / 100)) 
+     calc(50% + calc(15% * var(--pas) / 100)),
+     
+     /* point 4 */
+     calc(50% + calc(15% * var(--dri) / 100)) 
+     calc(50% + calc(37% * var(--dri) / 100)),
+         
+     /* point 5 */
+     calc(50% - calc(15% * var(--def) / 100))
+     calc(50% + calc(37% * var(--def) / 100)),
+      
+     /* point 6 */
+     calc(50% - calc(37% * var(--phy) / 100))
+     calc(50% + calc(15% * var(--phy) / 100)),
+      
+     /* point 7 */
+     calc(50% - calc(37% * var(--foo) / 100))
+     calc(50% - calc(15% * var(--foo) / 100)),
+      
+     /* point 8 */
+     calc(50% - calc(15% * var(--bar) / 100))
+     calc(50% - calc(37% * var(--bar) / 100))
+      
+      
+   )
+}
+
+
+/* positioning all the properties 'pac', 'sho', ...    
+ * around the radar 
+ */
+
+.player__radar--8:not(:hover)::after,
+.player__radar--8:not(:hover) dt::after {
+   opacity: 0 !important;
+}
+
+
+.player__radar--8 dt:nth-of-type(1) { 
+   top: -3%; left: 65%; 
+   transform: translateX(-50%);
+}
+
+.player__radar--8 dt:nth-of-type(2) { 
+   top: 35%; left: 92%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--8 dt:nth-of-type(3) { 
+   top: 65%; left: 92%; 
+   transform: translateY(-50%);
+}
+
+.player__radar--8 dt:nth-of-type(4) { 
+   top: 90%; left: 65%; 
+   transform: translateX(-50%);
+}
+
+.player__radar--8 dt:nth-of-type(5) { 
+   top: 90%; left: 35%; 
+   transform: translateX(-50%); 
+}
+
+.player__radar--8 dt:nth-of-type(6) { 
+   top: 65%; right: 93%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--8 dt:nth-of-type(7) { 
+   top: 35%; right: 93%; 
+   transform: translateY(-50%); 
+}
+
+.player__radar--8 dt:nth-of-type(8) { 
+   top: -3%; left: 35%; 
+   transform: translateX(-50%); 
+}
+
+
+.player__radar--8 dt:nth-of-type(1)::after { 
+   counter-reset: value var(--pac); }
+
+.player__radar--8 dt:nth-of-type(2)::after { 
+   counter-reset: value var(--sho); }
+
+.player__radar--8 dt:nth-of-type(3)::after {  
+   counter-reset: value var(--pas); }
+
+.player__radar--8 dt:nth-of-type(4)::after { 
+   counter-reset: value var(--dri); }
+
+.player__radar--8 dt:nth-of-type(5)::after { 
+   counter-reset: value var(--def); }
+
+.player__radar--8 dt:nth-of-type(6)::after { 
+   counter-reset: value var(--phy); }
+
+.player__radar--8 dt:nth-of-type(7)::after { 
+   counter-reset: value var(--foo); }
+
+.player__radar--8 dt:nth-of-type(8)::after { 
+   counter-reset: value var(--bar); }

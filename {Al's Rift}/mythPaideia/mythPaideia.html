@@ -1,0 +1,164 @@
+<!--MYTH PAIDEIA-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Al's Rift - Mythological Encyclopaedia</title>
+</head>
+
+
+<body>
+    <header>
+        <h1>Al's Rift</h1>
+    </header>
+
+    <main>
+        <h2>Mythological Encyclopaedia</h2>
+        <table class='radarChart' id='radarFirst'>
+            <theader>
+                <tr>
+                    <th scope='col'>ATK</th>
+                    <th scope='col'>DEF</th>
+                    <th scope='col'>AGI</th>
+                    <th scope='col'>DEX</th>
+                    <th scope='col'>INT</th>
+                    <th scope='col'>WIZ</th>
+                    <th scope='col'>CHA</th>
+                    <th scope='col'>LUK</th>
+                </tr>
+            </theader>
+            
+            <tbody>
+                <tr>
+                    <td><span>10</span></td>
+                    <td><span>20</span></td>
+                    <td><span>30</span></td>
+                    <td><span>50</span></td>
+                    <td><span>60</span></td>
+                    <td><span>70</span></td>
+                    <td><span>80</span></td>
+                    <td><span>90</span></td>
+                </tr>
+            </tbody>
+        </table>
+
+
+
+
+
+
+<table class="radar chaarts" id="radar" style="--scale: 20; --step: 5; --items: 7; --1: 14; --2: 11; --3: 13; --4: 16; --5: 10; --6: 12; --7: 4; --8: var(--1);">
+			<caption id="caption-9">Level of interest by domain, out of 20</caption>
+			<thead>
+			<tr>
+				<th scope="col">Accessibility</th>
+				<th scope="col">SEO</th>
+				<th scope="col">Performance</th>
+				<th scope="col">Compatibility</th>
+				<th scope="col">Security</th>
+				<th scope="col">Code quality</th>
+				<th scope="col">Test</th>
+			</tr>
+			</thead>
+			<tbody>
+			<tr>
+				<td><span>14</span></td>
+				<td><span>11</span></td>
+				<td><span>13</span></td>
+				<td><span>16</span></td>
+				<td><span>10</span></td>
+				<td><span>12</span></td>
+				<td><span>4</span></td>
+			</tr>
+			</tbody>
+		</table>
+
+
+
+
+
+        
+        <div>
+            <canvas id="myChart"></canvas>
+        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+        
+
+        
+
+    </main>
+
+    <footer>
+        <p>&copy; 2024 My Website</p>
+    </footer>
+<script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+const ctx = document.getElementById('myChart');
+    
+const data = {
+  labels: [
+    'Eating',
+    'Drinking',
+    'Sleeping',
+    'Designing',
+    'Coding',
+    'Cycling',
+    'Running'
+  ],
+  datasets: [{
+    label: 'My First Dataset',
+    data: [65, 59, 90, 81, 0, 55, 40],
+    fill: true,
+    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    borderColor: 'rgb(255, 99, 132)',
+    pointBackgroundColor: 'rgb(255, 99, 132)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(255, 99, 132)'
+  }, {
+    label: 'My Second Dataset',
+    data: [28, 48, 40, 19, 96, 27, 100],
+    fill: true,
+    backgroundColor: 'rgba(54, 162, 235, 0.2)',
+    borderColor: 'rgb(54, 162, 235)',
+    pointBackgroundColor: 'rgb(54, 162, 235)',
+    pointBorderColor: '#fff',
+    pointHoverBackgroundColor: '#fff',
+    pointHoverBorderColor: 'rgb(54, 162, 235)'
+  }]
+};
+
+
+
+new Chart(ctx, {
+  type: 'radar',
+  data: data,
+  options: {
+    elements: {
+      line: {
+        borderWidth: 3
+      }
+    }
+  },
+});
+</script>
+    
+</body>
+
+</html>
